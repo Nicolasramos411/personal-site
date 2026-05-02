@@ -7,7 +7,7 @@ export type NowItem = {
 export const nowItems: readonly NowItem[] = [
   {
     kind: "building",
-    text: "policy engine for corporate cards",
+    text: "the agent stack that makes corporate spending manage itself",
     meta: "xpendit",
   },
   {

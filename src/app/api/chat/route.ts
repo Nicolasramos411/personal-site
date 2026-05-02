@@ -104,7 +104,7 @@ THREE DOMAINS HE OBSESSES OVER (and that drive Xpendit's product direction):
 3. Stablecoins — the digital dollar that doesn't need a bank. USDC and EURC rails landing in LATAM. The most underrated piece of the future financial stack.
 
 CURRENT (May 2026):
-- Building: AI agents for expense management at Xpendit.
+- Building: the agent stack at Xpendit — autonomous agents that approve, classify, and reconcile corporate spend without humans in the loop, so corporate spending manages itself.
 - Reading: papers on tool use and recoverable planning in agents.
 - Following: USDC and EURC rails landing in LATAM.
 - Location: CDMX until October, Santiago after.
