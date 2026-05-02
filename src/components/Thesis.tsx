@@ -3,18 +3,11 @@
 import { m, useReducedMotion, type Variants } from "framer-motion";
 import { Section } from "./Section";
 import { NumberTicker } from "./NumberTicker";
-import { useLocale } from "./Locale";
 
-const LINES_EN: readonly { num: string; lead: string; accent: string }[] = [
+const LINES: readonly { num: string; lead: string; accent: string }[] = [
   { num: "01", lead: "Agents are now your", accent: "colleagues" },
   { num: "02", lead: "Rails are now", accent: "software" },
   { num: "03", lead: "The dollar fits in", accent: "your phone" },
-];
-
-const LINES_ES: readonly { num: string; lead: string; accent: string }[] = [
-  { num: "01", lead: "Los agentes ahora son tus", accent: "colegas" },
-  { num: "02", lead: "Los rails ahora son", accent: "software" },
-  { num: "03", lead: "El dólar cabe en", accent: "tu teléfono" },
 ];
 
 const containerVariants: Variants = {
@@ -36,17 +29,10 @@ const lineVariants: Variants = {
 const formatPad2 = (n: number) => String(n).padStart(2, "0");
 
 export function Thesis() {
-  const { locale } = useLocale();
   const reduce = useReducedMotion();
-  const lines = locale === "es" ? LINES_ES : LINES_EN;
-  const label = locale === "es" ? "Tesis" : "Thesis";
-  const sub =
-    locale === "es"
-      ? "Tres observaciones desde el borde de la infraestructura financiera y la inteligencia artificial."
-      : "Three observations from working at the edge of financial infrastructure and artificial intelligence.";
 
   return (
-    <Section id="thesis" label={label} index="§1">
+    <Section id="thesis" label="Thesis" index="§1">
       <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-6 lg:gap-12">
         <div>
           <p
@@ -58,7 +44,8 @@ export function Thesis() {
               lineHeight: 1.5,
             }}
           >
-            {sub}
+            Three observations from working at the edge of financial
+            infrastructure and artificial intelligence.
           </p>
         </div>
 
@@ -69,7 +56,7 @@ export function Thesis() {
           whileInView={reduce ? undefined : "visible"}
           viewport={{ once: true, margin: "-80px" }}
         >
-          {lines.map((l, i) => (
+          {LINES.map((l, i) => (
             <m.div
               key={l.num}
               variants={reduce ? undefined : lineVariants}

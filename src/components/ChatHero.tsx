@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import {
   AnimatePresence,
@@ -8,7 +8,6 @@ import {
   useReducedMotion,
   type Variants,
 } from "framer-motion";
-import { useLocale } from "./Locale";
 
 const AssistantMessage = dynamic(
   () => import("./AssistantMessage").then((mod) => mod.AssistantMessage),
@@ -17,20 +16,12 @@ const AssistantMessage = dynamic(
 
 type Message = { role: "user" | "assistant"; content: string };
 
-const SUGGESTIONS_BY_LOCALE = {
-  en: [
-    "Who are you?",
-    "What are you building at Xpendit?",
-    "Why stablecoins?",
-    "Santiago or Mexico City?",
-  ],
-  es: [
-    "¿Quién eres?",
-    "¿Qué estás construyendo en Xpendit?",
-    "¿Por qué stablecoins?",
-    "¿Santiago o Ciudad de México?",
-  ],
-} as const;
+const SUGGESTIONS: readonly string[] = [
+  "Who are you?",
+  "What are you building at Xpendit?",
+  "Why stablecoins?",
+  "Santiago or Mexico City?",
+];
 
 const STORAGE_KEY = "chat-conversation";
 const STORAGE_TTL_MS = 1000 * 60 * 60 * 24;
@@ -180,7 +171,6 @@ const chipVariants: Variants = {
 };
 
 export function ChatHero() {
-  const { locale } = useLocale();
   const reduce = useReducedMotion();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
@@ -366,50 +356,6 @@ export function ChatHero() {
 
   const canSend = input.trim().length > 0 && !isLoading;
   const showSuggestions = messages.length === 0;
-  const suggestions = SUGGESTIONS_BY_LOCALE[locale];
-
-  const t = useMemo(() => {
-    if (locale === "es") {
-      return {
-        title: "¿Qué quieres saber sobre Nicolás?",
-        intro:
-          "Un operador entre Santiago y Ciudad de México. Construye infraestructura financiera de día y lee papers de agentes a las 2am. Pregúntame lo que quieras — o desliza para ver las secciones.",
-        placeholder: "Pregunta lo que quieras… (Enter para enviar, Shift+Enter nueva línea)",
-        ariaLabel: "Pregúntale a Nicolás",
-        clear: "← borrar conversación",
-        share: "compartir conversación",
-        shareCopied: "✓ link copiado",
-        retry: "Reintentar",
-        sharedBanner:
-          "Estás viendo una conversación compartida (solo lectura). Pregunta algo nuevo para retomar.",
-        ready: "listo · pregúntame algo",
-        live: "en vivo",
-        demo: "modo demo",
-        demoNote: "respuestas locales",
-        liveNote: "powered by groq + ai sdk",
-        kbHint: "⌘K para enfocar",
-      };
-    }
-    return {
-      title: "What do you want to know about Nicolás?",
-      intro:
-        "An operator between Santiago and Mexico City. I build financial infrastructure by day and read agent papers at 2am. Ask me anything — or scroll for the sections below.",
-      placeholder: "Ask me anything… (Enter to send, Shift+Enter for newline)",
-      ariaLabel: "Ask Nicolás anything",
-      clear: "← clear conversation",
-      share: "share conversation",
-      shareCopied: "✓ link copied",
-      retry: "Retry",
-      sharedBanner:
-        "You're viewing a shared conversation (read-only). Ask something to start a new one.",
-      ready: "ready · ask anything",
-      live: "live",
-      demo: "demo mode",
-      demoNote: "responses sampled locally",
-      liveNote: "powered by groq + ai sdk",
-      kbHint: "⌘K to focus",
-    };
-  }, [locale]);
 
   return (
     <section className="border-b border-line">
@@ -426,7 +372,6 @@ export function ChatHero() {
         </div>
 
         <m.h1
-          key={`title-${locale}`}
           className="text-ink"
           style={{
             fontSize: "clamp(40px, 6.6vw, 92px)",
@@ -439,7 +384,7 @@ export function ChatHero() {
           initial={reduce ? false : "hidden"}
           animate={reduce ? undefined : "visible"}
         >
-          {t.title.split(" ").map((word, i) => (
+          {"What do you want to know about Nicolás?".split(" ").map((word, i) => (
             <m.span
               key={`${word}-${i}`}
               variants={reduce ? undefined : titleWordVariants}
@@ -458,7 +403,7 @@ export function ChatHero() {
             letterSpacing: "-0.005em",
           }}
         >
-          {t.intro}
+          {"An operator between Santiago and Mexico City. I build financial infrastructure by day and read agent papers at 2am. Ask me anything — or scroll for the sections below."}
         </p>
 
         {isViewingShared ? (
@@ -466,7 +411,7 @@ export function ChatHero() {
             className="mt-8 max-w-[760px] border-l-2 border-ink pl-4 py-2 text-secondary"
             style={{ fontSize: "13px", lineHeight: 1.5 }}
           >
-            {t.sharedBanner}
+            {"You're viewing a shared conversation (read-only). Ask something to start a new one."}
           </div>
         ) : null}
 
@@ -514,7 +459,7 @@ export function ChatHero() {
                         }}
                       >
                         {m.role === "user"
-                          ? locale === "es" ? "tú" : "you"
+                          ? "you"
                           : mode === "groq"
                             ? `nico · groq · ${model ?? "llama"}`
                             : "nico · demo"}
@@ -551,7 +496,7 @@ export function ChatHero() {
                               minHeight: "44px",
                             }}
                           >
-                            {t.retry}
+                            {"Retry"}
                           </button>
                         </div>
                       ) : null}
@@ -563,7 +508,7 @@ export function ChatHero() {
 
             <div className="flex items-end gap-3 px-4 py-3">
               <label htmlFor="chat-input" className="sr-only">
-                {t.ariaLabel}
+                {"Ask Nicolás anything"}
               </label>
               <textarea
                 id="chat-input"
@@ -571,7 +516,7 @@ export function ChatHero() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={onKeyDown}
-                placeholder={t.placeholder}
+                placeholder="Ask me anything… (Enter to send, Shift+Enter for newline)"
                 rows={1}
                 disabled={isLoading}
                 autoComplete="off"
@@ -617,7 +562,7 @@ export function ChatHero() {
                 animate={reduce ? undefined : "visible"}
                 exit={reduce ? undefined : { opacity: 0, transition: { duration: 0.15 } }}
               >
-                {suggestions.map((s) => (
+                {SUGGESTIONS.map((s) => (
                   <m.button
                     key={s}
                     type="button"
@@ -657,7 +602,7 @@ export function ChatHero() {
                     letterSpacing: "0.08em",
                   }}
                 >
-                  {t.clear}
+                  {"← clear conversation"}
                 </button>
                 {!isViewingShared ? (
                   <button
@@ -671,7 +616,7 @@ export function ChatHero() {
                       letterSpacing: "0.08em",
                     }}
                   >
-                    {copyState === "copied" ? t.shareCopied : t.share}
+                    {copyState === "copied" ? "✓ link copied" : "share conversation"}
                   </button>
                 ) : null}
               </m.div>
@@ -702,26 +647,26 @@ export function ChatHero() {
             {mode === "groq" ? (
               <>
                 <span className="uppercase">
-                  {t.live} · groq · {model ?? "llama"}
+                  live · groq · {model ?? "llama"}
                 </span>
                 <span aria-hidden="true">·</span>
-                <span>{t.liveNote}</span>
+                <span>{"powered by groq + ai sdk"}</span>
               </>
             ) : mode === "mock" ? (
               <>
-                <span className="uppercase">{t.demo}</span>
+                <span className="uppercase">{"demo mode"}</span>
                 <span aria-hidden="true">·</span>
-                <span>{t.demoNote}</span>
+                <span>{"responses sampled locally"}</span>
               </>
             ) : (
               <>
-                <span className="uppercase">{t.ready}</span>
+                <span className="uppercase">{"ready · ask anything"}</span>
                 <span aria-hidden="true">·</span>
-                <span>{t.liveNote}</span>
+                <span>{"powered by groq + ai sdk"}</span>
               </>
             )}
             <span aria-hidden="true">·</span>
-            <span>{t.kbHint}</span>
+            <span>{"⌘K to focus"}</span>
           </div>
         </m.div>
       </div>

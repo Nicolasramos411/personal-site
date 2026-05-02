@@ -1,36 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { m, useReducedMotion } from "framer-motion";
 import { IconMark } from "./Icon";
-import { useLocale, LocaleToggle } from "./Locale";
+
+const LINKS: readonly { href: string; id: string; label: string; short: string }[] = [
+  { href: "#thesis", id: "thesis", label: "Thesis", short: "§1" },
+  { href: "#research", id: "research", label: "Research", short: "§2" },
+  { href: "#now", id: "now", label: "Now", short: "§3" },
+  { href: "#profile", id: "profile", label: "Profile", short: "§4" },
+];
 
 export function SiteNav() {
-  const { locale } = useLocale();
   const [activeId, setActiveId] = useState<string | null>(null);
   const reduce = useReducedMotion();
 
-  const links = useMemo(
-    () =>
-      locale === "es"
-        ? [
-            { href: "#thesis", id: "thesis", label: "Tesis", short: "§1" },
-            { href: "#research", id: "research", label: "Research", short: "§2" },
-            { href: "#now", id: "now", label: "Ahora", short: "§3" },
-            { href: "#profile", id: "profile", label: "Perfil", short: "§4" },
-          ]
-        : [
-            { href: "#thesis", id: "thesis", label: "Thesis", short: "§1" },
-            { href: "#research", id: "research", label: "Research", short: "§2" },
-            { href: "#now", id: "now", label: "Now", short: "§3" },
-            { href: "#profile", id: "profile", label: "Profile", short: "§4" },
-          ],
-    [locale],
-  );
-
   useEffect(() => {
-    const sections = links
+    const sections = LINKS
       .map((l) => document.getElementById(l.id))
       .filter((el): el is HTMLElement => el !== null);
     if (sections.length === 0) return;
@@ -50,7 +37,7 @@ export function SiteNav() {
 
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
-  }, [links]);
+  }, []);
 
   return (
     <header
@@ -84,7 +71,7 @@ export function SiteNav() {
         </Link>
 
         <nav className="flex items-center gap-3 sm:gap-6">
-          {links.map((l) => {
+          {LINKS.map((l) => {
             const isActive = activeId === l.id;
             return (
               <a
@@ -121,7 +108,6 @@ export function SiteNav() {
               </a>
             );
           })}
-          <LocaleToggle />
         </nav>
       </div>
     </header>

@@ -1,16 +1,6 @@
-"use client";
-
 import { IconArrowUp } from "./Icon";
-import { useLocale } from "./Locale";
 
 export function SiteFooter() {
-  const { locale } = useLocale();
-  const tagline =
-    locale === "es"
-      ? "© 2026 Nicolás Ramos · Construido entre Santiago y Ciudad de México."
-      : "© 2026 Nicolás Ramos · Built between Santiago and Mexico City.";
-  const top = locale === "es" ? "Volver arriba" : "Back to top";
-
   return (
     <footer>
       <div className="mx-auto max-w-[1280px] px-6 sm:px-12 py-12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
@@ -22,7 +12,7 @@ export function SiteFooter() {
             letterSpacing: "0.04em",
           }}
         >
-          {tagline}
+          © 2026 Nicolás Ramos · Built between Santiago and Mexico City.
         </div>
 
         <a
@@ -34,7 +24,7 @@ export function SiteFooter() {
             letterSpacing: "0.04em",
           }}
         >
-          <span>{top}</span>
+          <span>Back to top</span>
           <IconArrowUp size={10} />
         </a>
       </div>

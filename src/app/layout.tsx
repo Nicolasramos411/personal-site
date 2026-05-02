@@ -3,7 +3,6 @@ import { headers } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { LocaleProvider } from "@/components/Locale";
 import { MotionFeatures } from "@/components/MotionFeatures";
 import "./globals.css";
 
@@ -90,19 +89,17 @@ export default async function RootLayout({
           suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
-        <LocaleProvider>
-          <MotionFeatures>
-            <div
-              className="relative min-h-screen text-ink bg-paper"
-              style={{
-                fontFamily:
-                  "var(--font-sans), -apple-system, system-ui, sans-serif",
-              }}
-            >
-              {children}
-            </div>
-          </MotionFeatures>
-        </LocaleProvider>
+        <MotionFeatures>
+          <div
+            className="relative min-h-screen text-ink bg-paper"
+            style={{
+              fontFamily:
+                "var(--font-sans), -apple-system, system-ui, sans-serif",
+            }}
+          >
+            {children}
+          </div>
+        </MotionFeatures>
         <Analytics />
         <SpeedInsights />
       </body>

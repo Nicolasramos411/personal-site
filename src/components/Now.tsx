@@ -1,20 +1,9 @@
-"use client";
-
 import { Section } from "./Section";
 import { nowItems, nowUpdatedAt } from "@/data/now";
-import { useLocale } from "./Locale";
 
 export function NowPanel() {
-  const { locale } = useLocale();
-  const label = locale === "es" ? "Trabajo actual" : "Current work";
-  const sub =
-    locale === "es"
-      ? "Lo que está sobre la mesa este mes."
-      : "What's on the table this month.";
-  const updated = locale === "es" ? "actualizado" : "updated";
-
   return (
-    <Section id="now" label={label} index="§3">
+    <Section id="now" label="Current work" index="§3">
       <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-6 lg:gap-12">
         <div className="flex flex-col gap-2">
           <p
@@ -26,7 +15,7 @@ export function NowPanel() {
               lineHeight: 1.5,
             }}
           >
-            {sub}
+            What&apos;s on the table this month.
           </p>
           <p
             className="text-muted"
@@ -36,7 +25,7 @@ export function NowPanel() {
               letterSpacing: "0.04em",
             }}
           >
-            {updated} {nowUpdatedAt}
+            updated {nowUpdatedAt}
           </p>
         </div>
 
@@ -66,9 +55,7 @@ export function NowPanel() {
                   fontWeight: 400,
                 }}
               >
-                <span className="flex-1 min-w-0">
-                  {locale === "es" ? item.text : item.textEn}
-                </span>
+                <span className="flex-1 min-w-0">{item.text}</span>
                 {item.meta ? (
                   <span
                     className="text-muted uppercase"

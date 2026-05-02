@@ -4,7 +4,6 @@ import { m, useReducedMotion, type Variants } from "framer-motion";
 import { Section } from "./Section";
 import { NumberTicker } from "./NumberTicker";
 import { interests } from "@/data/interests";
-import { useLocale } from "./Locale";
 
 const containerVariants: Variants = {
   hidden: {},
@@ -23,16 +22,10 @@ const itemVariants: Variants = {
 const formatPad2 = (n: number) => String(n).padStart(2, "0");
 
 export function Research() {
-  const { locale } = useLocale();
   const reduce = useReducedMotion();
-  const sub =
-    locale === "es"
-      ? "Tres dominios bajo observación activa. Cada uno con sus tags y vector de exploración."
-      : "Three domains under active observation. Each with its own tags and exploration vector.";
-  const label = locale === "es" ? "Áreas de research" : "Research areas";
 
   return (
-    <Section id="research" label={label} index="§2">
+    <Section id="research" label="Research areas" index="§2">
       <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-6 lg:gap-12">
         <div>
           <p
@@ -44,7 +37,8 @@ export function Research() {
               lineHeight: 1.5,
             }}
           >
-            {sub}
+            Three domains under active observation. Each with its own tags and
+            exploration vector.
           </p>
         </div>
 
@@ -102,7 +96,7 @@ export function Research() {
                       letterSpacing: "-0.005em",
                     }}
                   >
-                    {locale === "es" ? item.description : item.descriptionEn}
+                    {item.description}
                   </p>
                   <ul className="flex flex-wrap gap-x-3 gap-y-1 mt-2 list-none p-0 m-0">
                     {item.tags.map((tag) => (
