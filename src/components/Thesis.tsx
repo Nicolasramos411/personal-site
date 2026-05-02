@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { m, useReducedMotion, type Variants } from "framer-motion";
 import { Section } from "./Section";
 import { NumberTicker } from "./NumberTicker";
 import { useLocale } from "./Locale";
@@ -62,7 +62,7 @@ export function Thesis() {
           </p>
         </div>
 
-        <motion.div
+        <m.div
           className="flex flex-col"
           variants={reduce ? undefined : containerVariants}
           initial={reduce ? false : "hidden"}
@@ -70,7 +70,7 @@ export function Thesis() {
           viewport={{ once: true, margin: "-80px" }}
         >
           {lines.map((l, i) => (
-            <motion.div
+            <m.div
               key={l.num}
               variants={reduce ? undefined : lineVariants}
               className={`grid grid-cols-[40px_1fr] gap-6 items-baseline py-6 sm:py-8 ${
@@ -102,9 +102,9 @@ export function Thesis() {
                 <span className="text-secondary italic">{l.accent}</span>
                 <span className="text-faint">.</span>
               </p>
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </Section>
   );

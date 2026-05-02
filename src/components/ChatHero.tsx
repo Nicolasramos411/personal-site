@@ -1,15 +1,19 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import dynamic from "next/dynamic";
 import {
   AnimatePresence,
-  motion,
+  m,
   useReducedMotion,
   type Variants,
 } from "framer-motion";
 import { useLocale } from "./Locale";
+
+const AssistantMessage = dynamic(
+  () => import("./AssistantMessage").then((mod) => mod.AssistantMessage),
+  { ssr: false },
+);
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -421,7 +425,7 @@ export function ChatHero() {
           / index — 2026
         </div>
 
-        <motion.h1
+        <m.h1
           key={`title-${locale}`}
           className="text-ink"
           style={{
@@ -436,15 +440,15 @@ export function ChatHero() {
           animate={reduce ? undefined : "visible"}
         >
           {t.title.split(" ").map((word, i) => (
-            <motion.span
+            <m.span
               key={`${word}-${i}`}
               variants={reduce ? undefined : titleWordVariants}
               style={{ display: "inline-block", marginRight: "0.25em" }}
             >
               {word}
-            </motion.span>
+            </m.span>
           ))}
-        </motion.h1>
+        </m.h1>
 
         <p
           className="mt-8 text-secondary max-w-[640px]"
@@ -466,12 +470,12 @@ export function ChatHero() {
           </div>
         ) : null}
 
-        <motion.div
+        <m.div
           className="mt-12 max-w-[760px]"
           layout={reduce ? false : "position"}
           transition={reduce ? { duration: 0 } : { duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
         >
-          <motion.div
+          <m.div
             layout={reduce ? false : true}
             className="relative bg-paper border border-line-strong overflow-hidden"
             style={{
@@ -601,11 +605,11 @@ export function ChatHero() {
                 {isLoading ? <SpinnerIcon size={14} /> : <SendIcon size={14} />}
               </button>
             </div>
-          </motion.div>
+          </m.div>
 
           <AnimatePresence mode="wait" initial={false}>
             {showSuggestions ? (
-              <motion.div
+              <m.div
                 key="suggestions"
                 className="mt-5 flex flex-wrap gap-2"
                 variants={reduce ? undefined : chipContainerVariants}
@@ -614,7 +618,7 @@ export function ChatHero() {
                 exit={reduce ? undefined : { opacity: 0, transition: { duration: 0.15 } }}
               >
                 {suggestions.map((s) => (
-                  <motion.button
+                  <m.button
                     key={s}
                     type="button"
                     onClick={() => send(s)}
@@ -630,11 +634,11 @@ export function ChatHero() {
                     }}
                   >
                     {s}
-                  </motion.button>
+                  </m.button>
                 ))}
-              </motion.div>
+              </m.div>
             ) : (
-              <motion.div
+              <m.div
                 key="actions"
                 className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2"
                 initial={reduce ? false : { opacity: 0, y: 4 }}
@@ -670,7 +674,7 @@ export function ChatHero() {
                     {copyState === "copied" ? t.shareCopied : t.share}
                   </button>
                 ) : null}
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
 
@@ -719,7 +723,7 @@ export function ChatHero() {
             <span aria-hidden="true">·</span>
             <span>{t.kbHint}</span>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -732,123 +736,3 @@ function clearShareHash() {
   }
 }
 
-function AssistantMessage({
-  parsed,
-  showCursor,
-}: {
-  parsed: Parsed;
-  showCursor: boolean;
-}) {
-  const reduce = useReducedMotion();
-  return (
-    <div
-      className="text-ink prose-md"
-      style={{
-        fontSize: "15px",
-        lineHeight: 1.55,
-        letterSpacing: "-0.005em",
-      }}
-    >
-      {parsed.text ? (
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          components={{
-            a: ({ href, children, ...props }) => {
-              const isExternal =
-                typeof href === "string" && /^https?:\/\//.test(href);
-              return (
-                <a
-                  href={href}
-                  target={isExternal ? "_blank" : undefined}
-                  rel={isExternal ? "noopener noreferrer" : undefined}
-                  className="underline underline-offset-4 decoration-line-strong hover:decoration-ink"
-                  {...props}
-                >
-                  {children}
-                </a>
-              );
-            },
-            p: ({ children }) => (
-              <p style={{ margin: "0 0 0.6em 0" }}>{children}</p>
-            ),
-            code: ({ children }) => (
-              <code
-                style={{
-                  background: "var(--color-canvas)",
-                  padding: "1px 6px",
-                  borderRadius: "4px",
-                  fontSize: "0.92em",
-                  fontFamily: "var(--font-mono), monospace",
-                }}
-              >
-                {children}
-              </code>
-            ),
-            ul: ({ children }) => (
-              <ul style={{ margin: "0.4em 0 0.6em 1.1em", padding: 0 }}>
-                {children}
-              </ul>
-            ),
-            ol: ({ children }) => (
-              <ol style={{ margin: "0.4em 0 0.6em 1.4em", padding: 0 }}>
-                {children}
-              </ol>
-            ),
-          }}
-        >
-          {parsed.text}
-        </ReactMarkdown>
-      ) : (
-        <span className="text-faint">…</span>
-      )}
-      {showCursor ? (
-        <span
-          aria-hidden="true"
-          className="site-blink inline-block align-middle ml-1"
-          style={{
-            width: "8px",
-            height: "16px",
-            background: "var(--color-ink)",
-            verticalAlign: "-3px",
-          }}
-        />
-      ) : null}
-      {parsed.chips.length > 0 && !showCursor ? (
-        <motion.div
-          className="mt-3 flex flex-wrap gap-2"
-          variants={reduce ? undefined : chipContainerVariants}
-          initial={reduce ? false : "hidden"}
-          animate={reduce ? undefined : "visible"}
-        >
-          {parsed.chips.map((c) => {
-            const isExternal = /^https?:\/\//.test(c.href);
-            return (
-              <motion.a
-                key={`${c.label}-${c.href}`}
-                variants={reduce ? undefined : chipVariants}
-                href={c.href}
-                target={isExternal ? "_blank" : undefined}
-                rel={isExternal ? "noopener noreferrer" : undefined}
-                className="inline-flex items-center gap-1.5 border border-line-strong hover:border-ink hover:bg-canvas active:scale-[0.97] transition-all text-ink"
-                style={{
-                  fontSize: "12px",
-                  letterSpacing: "0.02em",
-                  padding: "8px 14px",
-                  borderRadius: "999px",
-                  minHeight: "36px",
-                }}
-              >
-                {c.label}
-                {isExternal ? (
-                  <span aria-hidden="true" className="text-muted">
-                    ↗
-                  </span>
-                ) : null}
-              </motion.a>
-            );
-          })}
-        </motion.div>
-      ) : null}
-    </div>
-  );
-}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { IconMark } from "./Icon";
 import { useLocale, LocaleToggle } from "./Locale";
 
@@ -96,7 +96,7 @@ export function SiteNav() {
               >
                 {l.label}
                 {isActive ? (
-                  <motion.span
+                  <m.span
                     layoutId="nav-underline"
                     aria-hidden="true"
                     className="absolute left-0 right-0"

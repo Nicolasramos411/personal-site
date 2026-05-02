@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { LocaleProvider } from "@/components/Locale";
+import { MotionFeatures } from "@/components/MotionFeatures";
 import "./globals.css";
 
 const SITE_URL = "https://nicolasramos.dev";
@@ -70,11 +72,12 @@ const personSchema = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
   return (
     <html
       lang="en"
@@ -83,18 +86,21 @@ export default function RootLayout({
       <body>
         <script
           type="application/ld+json"
+          nonce={nonce}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
         <LocaleProvider>
-          <div
-            className="relative min-h-screen text-ink bg-paper"
-            style={{
-              fontFamily:
-                "var(--font-sans), -apple-system, system-ui, sans-serif",
-            }}
-          >
-            {children}
-          </div>
+          <MotionFeatures>
+            <div
+              className="relative min-h-screen text-ink bg-paper"
+              style={{
+                fontFamily:
+                  "var(--font-sans), -apple-system, system-ui, sans-serif",
+              }}
+            >
+              {children}
+            </div>
+          </MotionFeatures>
         </LocaleProvider>
         <Analytics />
         <SpeedInsights />

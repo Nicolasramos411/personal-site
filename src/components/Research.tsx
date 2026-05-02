@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { m, useReducedMotion, type Variants } from "framer-motion";
 import { Section } from "./Section";
 import { NumberTicker } from "./NumberTicker";
 import { interests } from "@/data/interests";
@@ -48,7 +48,7 @@ export function Research() {
           </p>
         </div>
 
-        <motion.ul
+        <m.ul
           className="flex flex-col list-none p-0 m-0 border-t border-line"
           variants={reduce ? undefined : containerVariants}
           initial={reduce ? false : "hidden"}
@@ -56,7 +56,7 @@ export function Research() {
           viewport={{ once: true, margin: "-80px" }}
         >
           {interests.map((item, i) => (
-            <motion.li
+            <m.li
               key={item.id}
               id={`section-${item.id}`}
               variants={reduce ? undefined : itemVariants}
@@ -132,9 +132,9 @@ export function Research() {
                   {item.category}
                 </span>
               </article>
-            </motion.li>
+            </m.li>
           ))}
-        </motion.ul>
+        </m.ul>
       </div>
     </Section>
   );

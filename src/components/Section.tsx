@@ -29,8 +29,8 @@ export function Section({ id, label, index, children }: Props) {
                 {index}
               </span>
             ) : null}
-            <span
-              className="uppercase text-ink"
+            <h2
+              className="uppercase text-ink m-0"
               style={{
                 fontFamily: "var(--font-mono), monospace",
                 fontSize: "11px",
@@ -39,7 +39,7 @@ export function Section({ id, label, index, children }: Props) {
               }}
             >
               {label}
-            </span>
+            </h2>
           </div>
         </header>
 

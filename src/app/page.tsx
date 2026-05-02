@@ -10,11 +10,13 @@ export default function Home() {
   return (
     <div id="top">
       <SiteNav />
-      <ChatHero />
-      <Thesis />
-      <Research />
-      <NowPanel />
-      <Profile />
+      <main>
+        <ChatHero />
+        <Thesis />
+        <Research />
+        <NowPanel />
+        <Profile />
+      </main>
       <SiteFooter />
     </div>
   );
