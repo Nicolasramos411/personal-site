@@ -14,8 +14,8 @@ export function Section({ id, label, index, children }: Props) {
       className="border-b border-line"
       style={{ scrollMarginTop: "calc(var(--nav-height) + 16px)" }}
     >
-      <div className="mx-auto max-w-[1280px] px-6 sm:px-12 py-20 sm:py-28">
-        <header className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-6 lg:gap-12 mb-12 sm:mb-16">
+      <div className="mx-auto max-w-[1280px] px-5 sm:px-12 py-16 sm:py-28">
+        <header className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-4 lg:gap-12 mb-10 sm:mb-16">
           <div className="flex items-baseline gap-3">
             {index ? (
               <span

@@ -413,7 +413,7 @@ export function ChatHero() {
 
   return (
     <section className="border-b border-line">
-      <div className="mx-auto max-w-[1280px] px-6 sm:px-12 pt-24 sm:pt-32 pb-20 sm:pb-28">
+      <div className="mx-auto max-w-[1280px] px-5 sm:px-12 pt-16 sm:pt-32 pb-16 sm:pb-28">
         <div
           className="uppercase text-muted mb-8"
           style={{
@@ -490,7 +490,7 @@ export function ChatHero() {
                 role="log"
                 aria-live="polite"
                 aria-label="Conversation"
-                className="max-h-[420px] overflow-y-auto border-b border-line"
+                className="max-h-[60dvh] sm:max-h-[420px] overflow-y-auto border-b border-line overscroll-contain"
                 style={{ scrollbarWidth: "thin" }}
               >
                 {messages.map((m, i) => {
@@ -544,11 +544,11 @@ export function ChatHero() {
                             onClick={retry}
                             className="inline-flex items-center gap-2 border border-line-strong hover:border-ink hover:bg-canvas transition-colors text-ink active:scale-95"
                             style={{
-                              fontSize: "12.5px",
+                              fontSize: "13px",
                               letterSpacing: "-0.005em",
-                              padding: "8px 14px",
+                              padding: "12px 18px",
                               borderRadius: "999px",
-                              minHeight: "36px",
+                              minHeight: "44px",
                             }}
                           >
                             {t.retry}
@@ -578,7 +578,7 @@ export function ChatHero() {
                 spellCheck={false}
                 className="flex-1 resize-none bg-transparent outline-none text-ink placeholder:text-faint disabled:opacity-50"
                 style={{
-                  fontSize: "15px",
+                  fontSize: "16px",
                   lineHeight: 1.5,
                   letterSpacing: "-0.005em",
                   minHeight: "28px",
@@ -591,11 +591,11 @@ export function ChatHero() {
                 onClick={() => send(input)}
                 disabled={!canSend}
                 aria-label="Send message"
-                className="flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed enabled:hover:opacity-90 enabled:active:scale-95"
+                className="flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed enabled:hover:opacity-90 enabled:active:scale-95 shrink-0"
                 style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "10px",
+                  width: "44px",
+                  height: "44px",
+                  borderRadius: "12px",
                   background: canSend
                     ? "var(--color-ink)"
                     : "var(--color-line)",
@@ -628,9 +628,9 @@ export function ChatHero() {
                     style={{
                       fontSize: "13px",
                       letterSpacing: "-0.005em",
-                      padding: "10px 16px",
+                      padding: "12px 18px",
                       borderRadius: "999px",
-                      minHeight: "40px",
+                      minHeight: "44px",
                     }}
                   >
                     {s}

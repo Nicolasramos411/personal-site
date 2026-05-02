@@ -15,16 +15,16 @@ export function SiteNav() {
     () =>
       locale === "es"
         ? [
-            { href: "#thesis", id: "thesis", label: "Tesis" },
-            { href: "#research", id: "research", label: "Research" },
-            { href: "#now", id: "now", label: "Ahora" },
-            { href: "#profile", id: "profile", label: "Perfil" },
+            { href: "#thesis", id: "thesis", label: "Tesis", short: "§1" },
+            { href: "#research", id: "research", label: "Research", short: "§2" },
+            { href: "#now", id: "now", label: "Ahora", short: "§3" },
+            { href: "#profile", id: "profile", label: "Perfil", short: "§4" },
           ]
         : [
-            { href: "#thesis", id: "thesis", label: "Thesis" },
-            { href: "#research", id: "research", label: "Research" },
-            { href: "#now", id: "now", label: "Now" },
-            { href: "#profile", id: "profile", label: "Profile" },
+            { href: "#thesis", id: "thesis", label: "Thesis", short: "§1" },
+            { href: "#research", id: "research", label: "Research", short: "§2" },
+            { href: "#now", id: "now", label: "Now", short: "§3" },
+            { href: "#profile", id: "profile", label: "Profile", short: "§4" },
           ],
     [locale],
   );
@@ -58,15 +58,17 @@ export function SiteNav() {
       style={{
         backdropFilter: "saturate(140%) blur(8px)",
         WebkitBackdropFilter: "saturate(140%) blur(8px)",
+        paddingTop: "env(safe-area-inset-top)",
       }}
     >
       <div
-        className="mx-auto max-w-[1280px] px-6 sm:px-12 flex items-center justify-between"
+        className="mx-auto max-w-[1280px] px-5 sm:px-12 flex items-center justify-between gap-3"
         style={{ height: "var(--nav-height)" }}
       >
         <Link
           href="/"
-          className="flex items-center gap-3 text-ink hover:opacity-70 transition-opacity py-2"
+          aria-label="Nicolás Ramos — home"
+          className="flex items-center gap-2.5 text-ink hover:opacity-70 transition-opacity py-2 shrink-0"
           style={{ fontSize: "13px", letterSpacing: "0.02em" }}
         >
           <span
@@ -76,10 +78,12 @@ export function SiteNav() {
           >
             <IconMark size={22} />
           </span>
-          <span className="font-medium">Nicolás Ramos</span>
+          <span className="font-medium hidden min-[400px]:inline">
+            Nicolás Ramos
+          </span>
         </Link>
 
-        <nav className="flex items-center gap-4 sm:gap-6">
+        <nav className="flex items-center gap-3 sm:gap-6">
           {links.map((l) => {
             const isActive = activeId === l.id;
             return (
@@ -87,14 +91,16 @@ export function SiteNav() {
                 key={l.href}
                 href={l.href}
                 aria-current={isActive ? "true" : undefined}
+                aria-label={l.label}
                 className={`relative py-3 transition-colors ${
-                  isActive
-                    ? "text-ink"
-                    : "text-secondary hover:text-ink"
+                  isActive ? "text-ink" : "text-secondary hover:text-ink"
                 }`}
                 style={{ fontSize: "12.5px", letterSpacing: "0.02em" }}
               >
-                {l.label}
+                <span className="sm:hidden tabular-nums" aria-hidden="true">
+                  {l.short}
+                </span>
+                <span className="hidden sm:inline">{l.label}</span>
                 {isActive ? (
                   <m.span
                     layoutId="nav-underline"

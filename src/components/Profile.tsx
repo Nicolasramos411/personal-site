@@ -105,7 +105,7 @@ export function Profile() {
             return (
               <div
                 key={r.labelEn}
-                className="grid grid-cols-[120px_1fr] sm:grid-cols-[180px_1fr] gap-6 items-baseline py-5 border-b border-line"
+                className="grid grid-cols-[100px_1fr] sm:grid-cols-[180px_1fr] gap-4 sm:gap-6 items-baseline py-5 border-b border-line"
               >
                 <dt
                   className="uppercase text-muted"
@@ -118,11 +118,12 @@ export function Profile() {
                   {label}
                 </dt>
                 <dd
-                  className="m-0 text-ink"
+                  className="m-0 text-ink min-w-0"
                   style={{
                     fontSize: "clamp(15px, 1.3vw, 18px)",
                     lineHeight: 1.4,
                     letterSpacing: "-0.005em",
+                    overflowWrap: "anywhere",
                   }}
                 >
                   {r.href ? (

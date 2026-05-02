@@ -40,6 +40,7 @@ export function AssistantMessage({
         fontSize: "15px",
         lineHeight: 1.55,
         letterSpacing: "-0.005em",
+        overflowWrap: "anywhere",
       }}
     >
       {parsed.text ? (
@@ -124,11 +125,11 @@ export function AssistantMessage({
                 rel={isExternal ? "noopener noreferrer" : undefined}
                 className="inline-flex items-center gap-1.5 border border-line-strong hover:border-ink hover:bg-canvas active:scale-[0.97] transition-all text-ink"
                 style={{
-                  fontSize: "12px",
+                  fontSize: "13px",
                   letterSpacing: "0.02em",
-                  padding: "8px 14px",
+                  padding: "12px 18px",
                   borderRadius: "999px",
-                  minHeight: "36px",
+                  minHeight: "44px",
                 }}
               >
                 {c.label}

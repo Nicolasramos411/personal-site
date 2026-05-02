@@ -65,7 +65,7 @@ export function Research() {
                 scrollMarginTop: "calc(var(--nav-height) + 16px)",
               }}
             >
-              <article className="grid grid-cols-[60px_1fr_auto] gap-4 sm:gap-8 items-baseline py-8 sm:py-10">
+              <article className="grid grid-cols-[44px_1fr] sm:grid-cols-[60px_1fr_auto] gap-3 sm:gap-8 items-baseline py-7 sm:py-10">
                 <NumberTicker
                   value={parseInt(item.index, 10)}
                   format={formatPad2}
@@ -122,7 +122,7 @@ export function Research() {
                 </div>
 
                 <span
-                  className="self-start uppercase text-muted"
+                  className="hidden sm:inline self-start uppercase text-muted"
                   style={{
                     fontFamily: "var(--font-mono), monospace",
                     fontSize: "11px",

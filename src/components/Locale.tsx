@@ -81,7 +81,7 @@ export function LocaleToggle() {
       type="button"
       onClick={toggle}
       aria-label={`Switch language to ${locale === "en" ? "Spanish" : "English"}`}
-      className="inline-flex items-center gap-1.5 py-2 text-muted hover:text-ink transition-colors tabular-nums"
+      className="inline-flex items-center gap-1.5 px-1.5 py-3 text-muted hover:text-ink transition-colors tabular-nums"
       style={{
         fontFamily: "var(--font-mono), monospace",
         fontSize: "11px",
